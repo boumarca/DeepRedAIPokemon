@@ -1,24 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class ShowdownClient : MonoBehaviour
 {
+    [Header("States")]
     [SerializeField]
-    private string ServerUrl;
+    ClientState LoginState;
 
-	// Use this for initialization
-	void Start ()
-    {
-        Connect();
-	}
 
-    public void Connect()
+    ClientState State;
+
+    void Start()
     {
-        if (!string.IsNullOrEmpty(ServerUrl))
-        {
-            WebsocketConnection.Instance.OpenSocket(ServerUrl);
-            WebsocketConnection.Instance.Connect();
-        }
+        WebsocketConnection.Instance.OnMessageReceived += MessageReceived;
+        ChangeState(LoginState);
+    }
+
+    public void MessageReceived(object sender, MessageReceivedEventArgs e)
+    {
+        //Parse message
+        //Send message to state
+        State.ReceiveMessage(this, e.Message);
+    }
+
+    void ChangeState(ClientState newState)
+    {
+        if (State != null)
+            State.LeaveState();
+
+        State = newState;
+
+        if (State != null)
+            State.EnterState();
     }
 }

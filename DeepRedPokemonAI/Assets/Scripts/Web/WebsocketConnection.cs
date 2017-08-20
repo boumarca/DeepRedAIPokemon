@@ -10,6 +10,16 @@ public enum LogLevel
     None
 }
 
+public class MessageReceivedEventArgs : EventArgs
+{
+    public string Message { get; set; }
+
+    public MessageReceivedEventArgs(string message)
+    {
+        Message = message;
+    }
+}
+
 public class WebsocketConnection : MonoBehaviour
 {
     public static WebsocketConnection Instance { get; private set; }   
@@ -19,59 +29,16 @@ public class WebsocketConnection : MonoBehaviour
 
     public LogLevel LogLevel = LogLevel.Debug;
 
-    public event EventHandler OnOpen 
+    private event EventHandler<MessageReceivedEventArgs> OnMessageReceivedInternal;
+    public event EventHandler<MessageReceivedEventArgs> OnMessageReceived
     {
         add
         {
-            if (Socket != null)
-                Socket.OnOpen += value;
+            OnMessageReceivedInternal += value;
         }
         remove
         {
-            if (Socket != null)
-                Socket.OnOpen -= value;
-        }
-    }
-
-    public event EventHandler<CloseEventArgs> OnClose
-    {
-        add
-        {
-            if (Socket != null)
-                Socket.OnClose += value;
-        }
-        remove
-        {
-            if (Socket != null)
-                Socket.OnClose -= value;
-        }
-    }
-
-    public event EventHandler<ErrorEventArgs> OnError
-    {
-        add
-        {
-            if (Socket != null)
-                Socket.OnError += value;
-        }
-        remove
-        {
-            if (Socket != null)
-                Socket.OnError -= value;
-        }
-    }
-
-    public event EventHandler<MessageEventArgs> OnMessage
-    {
-        add
-        {
-            if (Socket != null)
-                Socket.OnMessage += value;
-        }
-        remove
-        {
-            if (Socket != null)
-                Socket.OnMessage -= value;
+            OnMessageReceivedInternal -= value;
         }
     }
 
@@ -84,17 +51,23 @@ public class WebsocketConnection : MonoBehaviour
     public void OpenSocket(string url)
     {
         Socket = new WebSocket(url);
-        OnOpen += DebugOnOpen;
-        OnClose += DebugOnClose;
-        OnError += DebugOnError;
-        OnMessage += DebugOnMessage;
-        OnMessage += OnMessageReceived;         
+        Socket.OnOpen += DebugOnOpen;
+        Socket.OnClose += DebugOnClose;
+        Socket.OnError += DebugOnError;
+        Socket.OnMessage += DebugOnMessage;
+        Socket.OnMessage += MessageReceived;
+        Socket.Connect();
     }
 
-    public void Connect()
+    public void CloseSocket()
     {
-        if (Socket != null)
-            Socket.Connect();
+        Socket.OnOpen -= DebugOnOpen;
+        Socket.OnClose -= DebugOnClose;
+        Socket.OnError -= DebugOnError;
+        Socket.OnMessage -= DebugOnMessage;
+        Socket.OnMessage -= MessageReceived;
+        Socket.Close();
+        Socket = null;
     }
 
     public void Send(string message)
@@ -107,7 +80,7 @@ public class WebsocketConnection : MonoBehaviour
         }
     }
 
-    public void EnqueueMessage(string message)
+    void EnqueueMessage(string message)
     {
         lock(Instance)     
         {
@@ -115,32 +88,32 @@ public class WebsocketConnection : MonoBehaviour
         }
     }
 
-    public string DequeueMessage()
+    string DequeueMessage()
     {
         lock(Instance)
         {
-            if(HasMessage())
+            if(MessagesToConsume.Count > 0)
                 return MessagesToConsume.Dequeue();
             return null;
         }
     }
 
-    public bool HasMessage()
+    void Update()
     {
-        return MessagesToConsume.Count > 0;
+        if (MessagesToConsume.Count > 0)
+        {
+            string message = DequeueMessage();
+            if (!string.IsNullOrEmpty(message))
+                OnMessageReceivedInternal(this, new MessageReceivedEventArgs(message));
+        }
     }
 
     void Destroy()
     {
-        OnOpen -= DebugOnOpen;
-        OnClose -= DebugOnClose;
-        OnError -= DebugOnError;
-        OnMessage -= DebugOnMessage;
-        OnMessage -= OnMessageReceived;
-        Socket.Close();
+        CloseSocket();
     }
 
-    void OnMessageReceived(object sender, MessageEventArgs e)
+    void MessageReceived(object sender, MessageEventArgs e)
     {
         if(e != null)
             EnqueueMessage(e.Data);
