@@ -1,41 +1,45 @@
-﻿using System;
+﻿using com.MAB.Web;
+using DeepRedAI.Parser;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class ShowdownClient : MonoBehaviour
+namespace DeepRedAI.Showdown
 {
-    [Header("States")]
-    [SerializeField]
-    ClientState LoginState;
-
-    ClientState State;
-
-    void Awake()
+    public class ShowdownClient : MonoBehaviour
     {
-        Assert.IsNotNull(LoginState, "LoginState is null");
-    }
+        [Header("States")]
+        [SerializeField]
+        ClientState LoginState;
 
-    void Start()
-    {
-        WebsocketConnection.Instance.OnMessageReceived += MessageReceived;
-        ChangeState(LoginState);
-    }
+        ClientState State;
 
-    public void MessageReceived(object sender, MessageReceivedEventArgs e)
-    {
-        ServerMessage m = MessageParser.Parse(e.Message);
-        if(m != null)
-            State.ReceiveMessage(this, m);
-    }
+        void Awake()
+        {
+            Assert.IsNotNull(LoginState, "LoginState is null");
+        }
 
-    void ChangeState(ClientState newState)
-    {
-        if (State != null)
-            State.LeaveState();
+        void Start()
+        {
+            WebsocketConnection.Instance.OnMessageReceived += MessageReceived;
+            ChangeState(LoginState);
+        }
 
-        State = newState;
+        public void MessageReceived(object sender, MessageReceivedEventArgs e)
+        {
+            ServerMessage m = MessageReader.Parse(e.Message);
+            if(m != null)
+                State.ReceiveMessage(this, m);
+        }
 
-        if (State != null)
-            State.EnterState();
+        void ChangeState(ClientState newState)
+        {
+            if (State != null)
+                State.LeaveState();
+
+            State = newState;
+
+            if (State != null)
+                State.EnterState();
+        }
     }
 }

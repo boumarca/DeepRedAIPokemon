@@ -1,18 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using DeepRedAI.Parser;
 using UnityEngine;
 
-public abstract class ClientState : MonoBehaviour
+namespace DeepRedAI.Showdown
 {
-    public virtual void EnterState()
+    public abstract class ClientState : MonoBehaviour
     {
-        gameObject.SetActive(true);
-    }
+        public virtual void EnterState()
+        {
+            gameObject.SetActive(true);
+        }
 
-    public virtual void LeaveState()
-    {
-        gameObject.SetActive(false);
-    }
+        public virtual void LeaveState()
+        {
+            gameObject.SetActive(false);
+        }
 
-    public abstract void ReceiveMessage(ShowdownClient context, ServerMessage message);
+        public abstract void ReceiveMessage(ShowdownClient context, ServerMessage message);
+    }
 }
