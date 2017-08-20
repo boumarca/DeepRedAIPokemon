@@ -18,9 +18,8 @@ public class ShowdownClient : MonoBehaviour
 
     public void MessageReceived(object sender, MessageReceivedEventArgs e)
     {
-        //Parse message
-        //Send message to state
-        State.ReceiveMessage(this, e.Message);
+        ServerMessage m = MessageParser.Parse(e.Message);
+        State.ReceiveMessage(this, m);
     }
 
     void ChangeState(ClientState newState)

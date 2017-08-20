@@ -14,5 +14,5 @@ public abstract class ClientState : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public abstract void ReceiveMessage(ShowdownClient context, string message);
+    public abstract void ReceiveMessage(ShowdownClient context, ServerMessage message);
 }

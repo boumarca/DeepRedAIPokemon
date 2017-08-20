@@ -28,7 +28,7 @@ public class ClientLoginState : ClientState
         }
     }
 
-    public override void ReceiveMessage(ShowdownClient context, string message)
+    public override void ReceiveMessage(ShowdownClient context, ServerMessage message)
     {
         //Do stuff with message
         Debug.Log("MESSAGE: " + message);
