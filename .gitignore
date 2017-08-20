@@ -2,3 +2,5 @@ DeepRedPokemonAI/Library/
 DeepRedPokemonAI/Temp/
 *.suo
 *.sln
+*.csproj
+*.userprefs
