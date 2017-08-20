@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class ClientLoginState : ClientState
@@ -17,6 +18,13 @@ public class ClientLoginState : ClientState
 
     string Username;
     string Password;
+
+    private void Awake()
+    {
+        Assert.IsNotNull(UsernameField, "Username field is null");
+        Assert.IsNotNull(PasswordField, "Password field is null");
+        Assert.IsFalse(string.IsNullOrEmpty(ServerUrl), "Url is null or empty.");
+    }
 
     public void Login()
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class ShowdownClient : MonoBehaviour
 {
@@ -7,8 +8,12 @@ public class ShowdownClient : MonoBehaviour
     [SerializeField]
     ClientState LoginState;
 
-
     ClientState State;
+
+    void Awake()
+    {
+        Assert.IsNotNull(LoginState, "LoginState is null");
+    }
 
     void Start()
     {
@@ -19,7 +24,8 @@ public class ShowdownClient : MonoBehaviour
     public void MessageReceived(object sender, MessageReceivedEventArgs e)
     {
         ServerMessage m = MessageParser.Parse(e.Message);
-        State.ReceiveMessage(this, m);
+        if(m != null)
+            State.ReceiveMessage(this, m);
     }
 
     void ChangeState(ClientState newState)
