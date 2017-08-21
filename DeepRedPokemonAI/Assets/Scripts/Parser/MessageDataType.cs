@@ -8,11 +8,12 @@ public static class MessageDataType
         ChallStr,
         QueryResponse,
         UpdateUser,
-        Formats
+        Formats,
+        Trn
     }
 
-    static BidirectionalMapping<string, DataType> _Map;
-    public static BidirectionalMapping<string, DataType> Map
+    static BidirectionalMapping<string, int> _Map;
+    public static BidirectionalMapping<string, int> Map
     {
         get
         {
@@ -24,11 +25,12 @@ public static class MessageDataType
 
     static void InitMapping()
     {
-        _Map = new BidirectionalMapping<string, DataType>();
-        _Map.Add("\n", DataType.Empty);
-        _Map.Add("challstr", DataType.ChallStr);
-        _Map.Add("queryresponse", DataType.QueryResponse);
-        _Map.Add("updateuser", DataType.UpdateUser);
-        _Map.Add("formats", DataType.Formats);
+        _Map = new BidirectionalMapping<string, int>();
+        _Map.Add("\n", (int)DataType.Empty);
+        _Map.Add("challstr", (int)DataType.ChallStr);
+        _Map.Add("queryresponse", (int)DataType.QueryResponse);
+        _Map.Add("updateuser", (int)DataType.UpdateUser);
+        _Map.Add("formats", (int)DataType.Formats);
+        _Map.Add("trn", (int)DataType.Trn);
     }
 }

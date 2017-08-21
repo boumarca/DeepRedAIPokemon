@@ -1,10 +1,11 @@
-﻿
-using System.Text;
+﻿using System.Text;
 
 namespace DeepRedAI.Parser
 {
     public class ServerMessageData
     {
+        public const string Delimiter = "|";
+
         public MessageDataType.DataType Type { get; private set; }
         public string[] Data { get; private set; }
 
@@ -17,10 +18,10 @@ namespace DeepRedAI.Parser
         public override string ToString()
         {
             StringBuilder s = new StringBuilder();
-            s.Append('|');
-            s.Append(MessageDataType.Map[Type]);
-            s.Append('|');
-            s.Append(string.Join("|", Data));
+            s.Append(Delimiter);
+            s.Append(MessageDataType.Map[(int)Type]);
+            s.Append(Delimiter);
+            s.Append(string.Join(Delimiter, Data));
             return s.ToString();
         }
     }
