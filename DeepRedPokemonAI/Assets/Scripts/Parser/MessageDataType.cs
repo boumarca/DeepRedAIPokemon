@@ -12,25 +12,25 @@ public static class MessageDataType
         Trn
     }
 
-    static BidirectionalMapping<string, int> _Map;
+    static BidirectionalMapping<string, int> _map;
     public static BidirectionalMapping<string, int> Map
     {
         get
         {
-            if (_Map == null)
+            if (_map == null)
                 InitMapping();
-            return _Map;
+            return _map;
         }
     }
 
     static void InitMapping()
     {
-        _Map = new BidirectionalMapping<string, int>();
-        _Map.Add("\n", (int)DataType.Empty);
-        _Map.Add("challstr", (int)DataType.ChallStr);
-        _Map.Add("queryresponse", (int)DataType.QueryResponse);
-        _Map.Add("updateuser", (int)DataType.UpdateUser);
-        _Map.Add("formats", (int)DataType.Formats);
-        _Map.Add("trn", (int)DataType.Trn);
+        _map = new BidirectionalMapping<string, int>();
+        _map.Add("\n", (int)DataType.Empty);
+        _map.Add("challstr", (int)DataType.ChallStr);
+        _map.Add("queryresponse", (int)DataType.QueryResponse);
+        _map.Add("updateuser", (int)DataType.UpdateUser);
+        _map.Add("formats", (int)DataType.Formats);
+        _map.Add("trn", (int)DataType.Trn);
     }
 }

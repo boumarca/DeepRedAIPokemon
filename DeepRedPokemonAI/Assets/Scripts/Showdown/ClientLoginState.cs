@@ -15,31 +15,29 @@ namespace DeepRedAI.Showdown
 
         [Header("UI Elements")]
         [SerializeField]
-        InputField UsernameField;
+        InputField _usernameField;
         [SerializeField]
-        InputField PasswordField;
+        InputField _passwordField;
 
         [Header("Data")]
         [SerializeField]
-        string ServerUrl;
+        string _serverUrl;
 
-        string Username;
-        string Password;
+        string[] _challstr;
+        string _username;
 
-        private void Awake()
+        void Awake()
         {
-            Assert.IsNotNull(UsernameField, "Username field is null");
-            Assert.IsNotNull(PasswordField, "Password field is null");
-            Assert.IsFalse(string.IsNullOrEmpty(ServerUrl), "Url is null or empty.");
+            Assert.IsNotNull(_usernameField, "Username field is null");
+            Assert.IsNotNull(_passwordField, "Password field is null");
+            Assert.IsFalse(string.IsNullOrEmpty(_serverUrl), "Url is null or empty.");
         }
 
-        public void Login()
+        void Start()
         {
-            if (!string.IsNullOrEmpty(UsernameField.text) && !string.IsNullOrEmpty(PasswordField.text) && !string.IsNullOrEmpty(ServerUrl))
+            if (!string.IsNullOrEmpty(_serverUrl))
             {
-                Username = UsernameField.text;
-                Password = PasswordField.text;
-                WebsocketConnection.Instance.OpenSocket(ServerUrl);
+                WebsocketConnection.Instance.OpenSocket(_serverUrl);
             }
         }
 
@@ -49,17 +47,25 @@ namespace DeepRedAI.Showdown
             for (int i = 0; i < payload.Length; i++)
             {
                 if (payload[i].Type == MessageDataType.DataType.ChallStr)
-                    StartCoroutine(Login(context, payload[i].Data));
+                    _challstr = payload[i].Data;
             }
         }
 
-        IEnumerator Login(ShowdownClient context, string[] data)
+        public void Login()
+        {
+            if (!string.IsNullOrEmpty(_usernameField.text) && !string.IsNullOrEmpty(_passwordField.text))
+            {
+                StartCoroutine(LoginRoutine());
+            }
+        }
+
+        IEnumerator LoginRoutine()
         {
             WWWForm form = new WWWForm();
             form.AddField("act", "login");
-            form.AddField("name", Username);
-            form.AddField("pass", Password);
-            form.AddField("challstr", string.Join("|", data));
+            form.AddField("name", _usernameField.text);
+            form.AddField("pass", _passwordField.text);
+            form.AddField("challstr", string.Join("|", _challstr));
 
             WWW www = new WWW(LoginURL, form);
             yield return www;
@@ -71,7 +77,8 @@ namespace DeepRedAI.Showdown
             {
                 string json = www.text.Remove(0, 1);
                 JSONNode node = JSON.Parse(json);
-                string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.DataType.Trn, Username, "0", node["assertion"]);
+                _username = node["curuser"]["username"];
+                string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.DataType.Trn, _username, "0", node["assertion"]);
                 WebsocketConnection.Instance.Send(command);
             }
         }

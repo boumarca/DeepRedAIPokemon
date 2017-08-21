@@ -9,37 +9,37 @@ namespace DeepRedAI.Showdown
     {
         [Header("States")]
         [SerializeField]
-        ClientState LoginState;
+        ClientState _loginState;
 
-        ClientState State;
+        ClientState _state;
 
         void Awake()
         {
-            Assert.IsNotNull(LoginState, "LoginState is null");
+            Assert.IsNotNull(_loginState, "LoginState is null");
         }
 
         void Start()
         {
             WebsocketConnection.Instance.OnMessageReceived += MessageReceived;
-            ChangeState(LoginState);
+            ChangeState(_loginState);
         }
 
         public void MessageReceived(object sender, MessageReceivedEventArgs e)
         {
             ServerMessage m = MessageReader.Parse(e.Message);
             if(m != null)
-                State.ReceiveMessage(this, m);
+                _state.ReceiveMessage(this, m);
         }
 
         void ChangeState(ClientState newState)
         {
-            if (State != null)
-                State.LeaveState();
+            if (_state != null)
+                _state.LeaveState();
 
-            State = newState;
+            _state = newState;
 
-            if (State != null)
-                State.EnterState();
+            if (_state != null)
+                _state.EnterState();
         }
     }
 }

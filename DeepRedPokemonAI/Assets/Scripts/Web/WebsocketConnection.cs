@@ -26,8 +26,8 @@ namespace com.MAB.Web
     {
         public static WebsocketConnection Instance { get; private set; }
 
-        WebSocket Socket;
-        Queue<string> MessagesToConsume;
+        WebSocket _socket;
+        Queue<string> _messagesToConsume;
 
         public LogLevel LogLevel = LogLevel.Debug;
 
@@ -47,38 +47,41 @@ namespace com.MAB.Web
         void Awake()
         {
             Instance = this;
-            MessagesToConsume = new Queue<string>();
+            _messagesToConsume = new Queue<string>();
         }
 
         public void OpenSocket(string url)
         {
-            Socket = new WebSocket(url);
-            Socket.OnOpen += DebugOnOpen;
-            Socket.OnClose += DebugOnClose;
-            Socket.OnError += DebugOnError;
-            Socket.OnMessage += DebugOnMessage;
-            Socket.OnMessage += MessageReceived;
-            Socket.Connect();
+            _socket = new WebSocket(url);
+            _socket.OnOpen += DebugOnOpen;
+            _socket.OnClose += DebugOnClose;
+            _socket.OnError += DebugOnError;
+            _socket.OnMessage += DebugOnMessage;
+            _socket.OnMessage += MessageReceived;
+            _socket.Connect();
         }
 
         public void CloseSocket()
         {
-            Socket.OnOpen -= DebugOnOpen;
-            Socket.OnClose -= DebugOnClose;
-            Socket.OnError -= DebugOnError;
-            Socket.OnMessage -= DebugOnMessage;
-            Socket.OnMessage -= MessageReceived;
-            Socket.Close();
-            Socket = null;
+            if (_socket == null)
+                return;
+
+            _socket.OnOpen -= DebugOnOpen;
+            _socket.OnClose -= DebugOnClose;
+            _socket.OnError -= DebugOnError;
+            _socket.OnMessage -= DebugOnMessage;
+            _socket.OnMessage -= MessageReceived;
+            _socket.Close();
+            _socket = null;
         }
 
         public void Send(string message)
         {
-            if (Socket != null)
+            if (_socket != null)
             {
                 if (LogLevel <= LogLevel.Debug)
                     Debug.Log("Send Message " + message);
-                Socket.Send(message);
+                _socket.Send(message);
             }
         }
 
@@ -86,7 +89,7 @@ namespace com.MAB.Web
         {
             lock (Instance)
             {
-                MessagesToConsume.Enqueue(message);
+                _messagesToConsume.Enqueue(message);
             }
         }
 
@@ -94,15 +97,15 @@ namespace com.MAB.Web
         {
             lock (Instance)
             {
-                if (MessagesToConsume.Count > 0)
-                    return MessagesToConsume.Dequeue();
+                if (_messagesToConsume.Count > 0)
+                    return _messagesToConsume.Dequeue();
                 return null;
             }
         }
 
         void Update()
         {
-            if (MessagesToConsume.Count > 0)
+            if (_messagesToConsume.Count > 0)
             {
                 string message = DequeueMessage();
                 if (!string.IsNullOrEmpty(message))

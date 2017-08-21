@@ -5,28 +5,28 @@ namespace com.MAB.Utils
 {
     public class BidirectionalMapping<T, K>
     {
-        private readonly Dictionary<T, K> First;
-        private readonly Dictionary<K, T> Second;
+        private readonly Dictionary<T, K> _first;
+        private readonly Dictionary<K, T> _second;
 
         public BidirectionalMapping()
         {
-            First = new Dictionary<T, K>();
-            Second = new Dictionary<K, T>();
+            _first = new Dictionary<T, K>();
+            _second = new Dictionary<K, T>();
         }
 
         public void Add(T first, K second)
         {
-            First.Add(first, second);
-            Second.Add(second, first);
+            _first.Add(first, second);
+            _second.Add(second, first);
         }
 
         public K this[T value]
         {
             get
             {
-                if (First.ContainsKey(value))
+                if (_first.ContainsKey(value))
                 {
-                    return First[value];
+                    return _first[value];
                 }
 
                 throw new ArgumentException(nameof(value));
@@ -37,9 +37,9 @@ namespace com.MAB.Utils
         {
             get
             {
-                if (Second.ContainsKey(value))
+                if (_second.ContainsKey(value))
                 {
-                    return Second[value];
+                    return _second[value];
                 }
 
                 throw new ArgumentException(nameof(value));
