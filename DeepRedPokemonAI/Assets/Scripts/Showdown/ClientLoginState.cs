@@ -49,7 +49,9 @@ namespace DeepRedAI.Showdown
                 if (payload[i].Type == MessageDataType.DataType.ChallStr)
                     _challstr = payload[i].Data;
                 else if (payload[i].Type == MessageDataType.DataType.UpdateUser)
-                    UpdateUser(payload[i].Data);
+                    UpdateUser(context, payload[i].Data);
+                else if (payload[i].Type == MessageDataType.DataType.Formats)
+                    context.PopulateFormatList(payload[i].Data);
             }
         }
 
@@ -85,18 +87,12 @@ namespace DeepRedAI.Showdown
             }
         }
         
-        void UpdateUser(string[] data)
+        void UpdateUser(ShowdownClient context, string[] data)
         {
             if(data.Length == 3 && data[0] == _username && data[1] == "1")
             {
-                Debug.Log("SUCCESSFUL LOGIN");
+                context.GoToLobby();
             }
-
-            /*
-            gameObject.SetActive(false);
-            m_LobbyView.gameObject.SetActive(true);
-            m_LobbyView.SetUsername(m_Username);
-            */
         }
     }
 }
