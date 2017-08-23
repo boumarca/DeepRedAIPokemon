@@ -6,10 +6,10 @@ namespace DeepRedAI.Parser
     {
         public const string Delimiter = "|";
 
-        public MessageDataType.DataType Type { get; private set; }
+        public string Type { get; private set; }
         public string[] Data { get; private set; }
 
-        public ServerMessageData(MessageDataType.DataType type, string[] data)
+        public ServerMessageData(string type, string[] data)
         {
             Type = type;
             Data = data;
@@ -19,7 +19,7 @@ namespace DeepRedAI.Parser
         {
             StringBuilder s = new StringBuilder();
             s.Append(Delimiter);
-            s.Append(MessageDataType.Map[(int)Type]);
+            s.Append(Type);
             s.Append(Delimiter);
             s.Append(string.Join(Delimiter, Data));
             return s.ToString();

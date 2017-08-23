@@ -46,11 +46,11 @@ namespace DeepRedAI.Showdown
             ServerMessageData[] payload = message.Payload;
             for (int i = 0; i < payload.Length; i++)
             {
-                if (payload[i].Type == MessageDataType.DataType.ChallStr)
+                if (payload[i].Type == MessageDataType.ChallStr)
                     _challstr = payload[i].Data;
-                else if (payload[i].Type == MessageDataType.DataType.UpdateUser)
+                else if (payload[i].Type == MessageDataType.UpdateUser)
                     UpdateUser(context, payload[i].Data);
-                else if (payload[i].Type == MessageDataType.DataType.Formats)
+                else if (payload[i].Type == MessageDataType.Formats)
                     context.PopulateFormatList(payload[i].Data);
             }
         }
@@ -82,7 +82,7 @@ namespace DeepRedAI.Showdown
                 string json = www.text.Remove(0, 1);
                 JSONNode node = JSON.Parse(json);
                 _username = node["curuser"]["username"];
-                string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.DataType.Trn, _username, "0", node["assertion"]);
+                string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Trn, _username, "0", node["assertion"]);
                 WebsocketConnection.Instance.Send(command);
             }
         }

@@ -47,11 +47,11 @@ namespace DeepRedAI.Parser
             if (splits.Length == 0)
                 return null;
 
-            MessageDataType.DataType type = MessageDataType.DataType.Empty;
+            string type = MessageDataType.Empty;
             string[] data = null;
             if (splits.Length > 1)
             {
-                type = (MessageDataType.DataType)MessageDataType.Map[splits[1]];
+                type = splits[1];
                 data = new string[splits.Length - 2];
                 Array.Copy(splits, 2, data, 0, data.Length);
             }
