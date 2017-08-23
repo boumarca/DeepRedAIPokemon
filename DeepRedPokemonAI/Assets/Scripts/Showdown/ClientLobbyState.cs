@@ -14,11 +14,17 @@ namespace DeepRedAI.Showdown
         {
             base.EnterState(context);
             _battleModule.PopulateFormats(context.FormatList);
-
         }
 
         public override void ReceiveMessage(ShowdownClient context, ServerMessage message)
         {
+        }
+
+        public void PlayLadder()
+        {
+            string formatId = _battleModule.CurrentFormatId();
+            Debug.Log(formatId);
+
         }
     }
 }
