@@ -17,6 +17,8 @@ namespace DeepRedAI.Showdown
         InputField _usernameField;
         [SerializeField]
         InputField _passwordField;
+        [SerializeField]
+        Text _errorText;
 
         [Header("Data")]
         [SerializeField]
@@ -43,11 +45,14 @@ namespace DeepRedAI.Showdown
                     UpdateUser(payload[i].Data);
                 else if (payload[i].Type == MessageDataType.Formats)
                     _context.PopulateFormatList(payload[i].Data);
+                else if (payload[i].Type == MessageDataType.NameTaken)
+                    LogErrorOnScreen(payload[i].Data);
             }
         }
 
         public void Login()
         {
+            _errorText.gameObject.SetActive(false);
             if (!string.IsNullOrEmpty(_usernameField.text) && !string.IsNullOrEmpty(_passwordField.text))
             {
                 StartCoroutine(LoginRoutine());
@@ -56,6 +61,7 @@ namespace DeepRedAI.Showdown
 
         public void LoginAsGuest()
         {
+            _errorText.gameObject.SetActive(false);
             _context.GoToLobby();
         }
 
@@ -84,11 +90,18 @@ namespace DeepRedAI.Showdown
         
         void UpdateUser(string[] data)
         {
+            _errorText.gameObject.SetActive(false);
             _context.Username = data[0];
             if (data[1] == "1")
             {
                 _context.GoToLobby();
             }
+        }
+
+        void LogErrorOnScreen(string[] data)
+        {
+            _errorText.text = data[1];
+            _errorText.gameObject.SetActive(true);
         }
     }
 }

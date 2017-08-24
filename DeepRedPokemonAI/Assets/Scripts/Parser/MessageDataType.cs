@@ -9,5 +9,6 @@
         public const string Formats = "formats";
         public const string Trn = "trn";
         public const string Logout = "logout";
+        public const string NameTaken = "nametaken";
     }   
 }
