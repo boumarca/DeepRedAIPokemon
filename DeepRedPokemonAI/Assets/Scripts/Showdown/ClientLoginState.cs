@@ -23,8 +23,7 @@ namespace DeepRedAI.Showdown
         [SerializeField]
         string _serverUrl;
 
-        string[] _challstr;
-        string _username;
+        string _challstr;
 
         void Awake()
         {
@@ -41,17 +40,17 @@ namespace DeepRedAI.Showdown
             }
         }
 
-        public override void ReceiveMessage(ShowdownClient context, ServerMessage message)
+        public override void ReceiveMessage(ServerMessage message)
         {
             ServerMessageData[] payload = message.Payload;
             for (int i = 0; i < payload.Length; i++)
             {
                 if (payload[i].Type == MessageDataType.ChallStr)
-                    _challstr = payload[i].Data;
+                    _challstr = string.Join("|", payload[i].Data);
                 else if (payload[i].Type == MessageDataType.UpdateUser)
-                    UpdateUser(context, payload[i].Data);
+                    UpdateUser(payload[i].Data);
                 else if (payload[i].Type == MessageDataType.Formats)
-                    context.PopulateFormatList(payload[i].Data);
+                    _context.PopulateFormatList(payload[i].Data);
             }
         }
 
@@ -63,13 +62,18 @@ namespace DeepRedAI.Showdown
             }
         }
 
+        public void LoginAsGuest()
+        {
+            _context.GoToLobby();
+        }
+
         IEnumerator LoginRoutine()
         {
             WWWForm form = new WWWForm();
             form.AddField("act", "login");
             form.AddField("name", _usernameField.text);
             form.AddField("pass", _passwordField.text);
-            form.AddField("challstr", string.Join("|", _challstr));
+            form.AddField("challstr", _challstr);
 
             WWW www = new WWW(LoginURL, form);
             yield return www;
@@ -81,17 +85,17 @@ namespace DeepRedAI.Showdown
             {
                 string json = www.text.Remove(0, 1);
                 JSONNode node = JSON.Parse(json);
-                _username = node["curuser"]["username"];
-                string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Trn, _username, "0", node["assertion"]);
+                string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Trn, node["curuser"]["username"], "0", node["assertion"]);
                 WebsocketConnection.Instance.Send(command);
             }
         }
         
-        void UpdateUser(ShowdownClient context, string[] data)
+        void UpdateUser(string[] data)
         {
-            if(data.Length == 3 && data[0] == _username && data[1] == "1")
+            _context.Username = data[0];
+            if (data[1] == "1")
             {
-                context.GoToLobby();
+                _context.GoToLobby();
             }
         }
     }

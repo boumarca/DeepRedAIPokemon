@@ -16,7 +16,7 @@ namespace DeepRedAI.Showdown
             _battleModule.PopulateFormats(context.FormatList);
         }
 
-        public override void ReceiveMessage(ShowdownClient context, ServerMessage message)
+        public override void ReceiveMessage(ServerMessage message)
         {
         }
 

@@ -19,7 +19,9 @@ namespace DeepRedAI.Showdown
 
         ClientState _state;
 
+
         public List<string> FormatList { get; private set; }
+        public string Username { get; set; }
 
         void Awake()
         {
@@ -37,13 +39,13 @@ namespace DeepRedAI.Showdown
         {
             ServerMessage m = MessageReader.Parse(e.Message);
             if(m != null)
-                _state.ReceiveMessage(this, m);
+                _state.ReceiveMessage(m);
         }
 
         void ChangeState(ClientState newState)
         {
             if (_state != null)
-                _state.LeaveState(this);
+                _state.LeaveState();
 
             _state = newState;
 
