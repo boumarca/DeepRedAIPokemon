@@ -436,7 +436,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 115840020}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1660118588}
+        m_MethodName: Logout
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &115840020
@@ -3555,7 +3566,6 @@ GameObject:
   - component: {fileID: 1186880941}
   - component: {fileID: 1186880940}
   - component: {fileID: 1186880939}
-  - component: {fileID: 1186880942}
   m_Layer: 5
   m_Name: Battle
   m_TagString: Untagged
@@ -3648,18 +3658,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1186880942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1186880937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49175b361592d0740877d34691ce4c5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _formats: {fileID: 2094053609}
 --- !u!1 &1269808963
 GameObject:
   m_ObjectHideFlags: 0
@@ -4809,7 +4807,6 @@ GameObject:
   - component: {fileID: 1632364184}
   - component: {fileID: 1632364183}
   - component: {fileID: 1632364182}
-  - component: {fileID: 1632364185}
   m_Layer: 5
   m_Name: Login
   m_TagString: Untagged
@@ -4896,18 +4893,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1632364185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1632364180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9e64c59d17d72e4c99a0727740e6249, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _userLabel: {fileID: 760099070}
 --- !u!1 &1645139871
 GameObject:
   m_ObjectHideFlags: 0
@@ -5091,8 +5076,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676b366977365864baf9db5c5a80d06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _battleModule: {fileID: 1186880942}
-  _loginModule: {fileID: 1632364185}
+  _formats: {fileID: 2094053609}
+  _userLabel: {fileID: 760099070}
 --- !u!1 &1662462798
 GameObject:
   m_ObjectHideFlags: 0

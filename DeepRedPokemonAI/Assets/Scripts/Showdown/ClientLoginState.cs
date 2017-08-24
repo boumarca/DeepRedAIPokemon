@@ -77,7 +77,7 @@ namespace DeepRedAI.Showdown
             {
                 string json = www.text.Remove(0, 1);
                 JSONNode node = JSON.Parse(json);
-                string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Trn, node["curuser"]["username"], "0", node["assertion"]);
+                string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Trn, _usernameField.text, "0", node["assertion"]);
                 WebsocketConnection.Instance.Send(command);
             }
         }

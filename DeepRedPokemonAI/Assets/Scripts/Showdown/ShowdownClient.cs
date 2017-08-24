@@ -50,6 +50,11 @@ namespace DeepRedAI.Showdown
             ChangeState(_lobbyState);
         }
 
+        public void GoToLogin()
+        {
+            ChangeState(_loginState);
+        }
+
         public void PopulateFormatList(string[] data)
         {
             FormatList = new List<string>(data.Length);
