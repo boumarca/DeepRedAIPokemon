@@ -2474,8 +2474,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 26.2, y: 1.0001001}
-  m_SizeDelta: {x: 412.5, y: 45}
+  m_AnchoredPosition: {x: 26.2, y: -0.3}
+  m_SizeDelta: {x: 412.5, y: 68.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &760099070
 MonoBehaviour:
@@ -2503,7 +2503,7 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 24
     m_MaxSize: 36
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -4809,6 +4809,7 @@ GameObject:
   - component: {fileID: 1632364184}
   - component: {fileID: 1632364183}
   - component: {fileID: 1632364182}
+  - component: {fileID: 1632364185}
   m_Layer: 5
   m_Name: Login
   m_TagString: Untagged
@@ -4895,6 +4896,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1632364185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1632364180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9e64c59d17d72e4c99a0727740e6249, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _userLabel: {fileID: 760099070}
 --- !u!1 &1645139871
 GameObject:
   m_ObjectHideFlags: 0
@@ -4987,7 +5000,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1660118584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5079,6 +5092,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _battleModule: {fileID: 1186880942}
+  _loginModule: {fileID: 1632364185}
 --- !u!1 &1662462798
 GameObject:
   m_ObjectHideFlags: 0
@@ -6622,8 +6636,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -299, y: 1.0001001}
-  m_SizeDelta: {x: 218.9, y: 45}
+  m_AnchoredPosition: {x: -299, y: -0.3}
+  m_SizeDelta: {x: 218.9, y: 68.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2072203408
 MonoBehaviour:
@@ -6651,7 +6665,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0

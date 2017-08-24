@@ -9,11 +9,14 @@ namespace DeepRedAI.Showdown
     {
         [SerializeField]
         LobbyBattleModule _battleModule;
-
+        [SerializeField]
+        LobbyLoginModule _loginModule;
+        
         public override void EnterState(ShowdownClient context)
         {
             base.EnterState(context);
             _battleModule.PopulateFormats(context.FormatList);
+            _loginModule.SetUserLabel(context.Username);
         }
 
         public override void ReceiveMessage(ServerMessage message)
@@ -24,7 +27,6 @@ namespace DeepRedAI.Showdown
         {
             string formatId = _battleModule.CurrentFormatId();
             Debug.Log(formatId);
-
         }
     }
 }

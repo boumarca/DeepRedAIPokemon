@@ -3,7 +3,6 @@ using DeepRedAI.Parser;
 using SimpleJSON;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace DeepRedAI.Showdown
@@ -24,14 +23,7 @@ namespace DeepRedAI.Showdown
         string _serverUrl;
 
         string _challstr;
-
-        void Awake()
-        {
-            Assert.IsNotNull(_usernameField, "Username field is null");
-            Assert.IsNotNull(_passwordField, "Password field is null");
-            Assert.IsFalse(string.IsNullOrEmpty(_serverUrl), "Url is null or empty.");
-        }
-
+        
         void Start()
         {
             if (!string.IsNullOrEmpty(_serverUrl))

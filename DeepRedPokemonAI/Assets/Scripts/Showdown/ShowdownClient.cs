@@ -1,7 +1,6 @@
 ﻿using com.MAB.Web;
 using DeepRedAI.Parser;
 using UnityEngine;
-using UnityEngine.Assertions;
 using System.Collections.Generic;
 
 namespace DeepRedAI.Showdown
@@ -19,16 +18,9 @@ namespace DeepRedAI.Showdown
 
         ClientState _state;
 
-
         public List<string> FormatList { get; private set; }
         public string Username { get; set; }
-
-        void Awake()
-        {
-            Assert.IsNotNull(_loginState, "LoginState is null");
-            Assert.IsNotNull(_loginState, "LobbyState is null");
-        }
-
+        
         void Start()
         {
             WebsocketConnection.Instance.OnMessageReceived += MessageReceived;
