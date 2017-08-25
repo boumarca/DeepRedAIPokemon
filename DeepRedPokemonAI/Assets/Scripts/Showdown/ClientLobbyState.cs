@@ -33,7 +33,8 @@ namespace DeepRedAI.Showdown
         public void PlayLadder()
         {
             string formatId = CurrentFormatId();
-            Debug.Log(formatId);
+            string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Search, formatId);
+            WebsocketConnection.Instance.Send(command);
         }
 
         public void Logout()
