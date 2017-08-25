@@ -20,9 +20,11 @@ namespace DeepRedAI.Showdown
 
         public List<string> FormatList { get; private set; }
         public string Username { get; set; }
-        
+
         void Start()
         {
+            _loginState.gameObject.SetActive(false);
+            _lobbyState.gameObject.SetActive(false);
             WebsocketConnection.Instance.OnMessageReceived += MessageReceived;
             ChangeState(_loginState);
         }

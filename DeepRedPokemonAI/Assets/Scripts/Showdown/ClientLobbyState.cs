@@ -18,6 +18,8 @@ namespace DeepRedAI.Showdown
         Dropdown _formats;
         [SerializeField]
         Text _userLabel;
+        [SerializeField]
+        InputField _challengerInputField;
 
         public override void EnterState(ShowdownClient context)
         {
@@ -42,6 +44,16 @@ namespace DeepRedAI.Showdown
             string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Logout);
             WebsocketConnection.Instance.Send(command);
             _context.GoToLogin();
+        }
+
+        public void ChallengeUser()
+        {
+            if (!string.IsNullOrEmpty(_challengerInputField.text))
+            {
+                string formatId = CurrentFormatId();
+                string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Challenge, _challengerInputField.text, formatId);
+                WebsocketConnection.Instance.Send(command);
+            }
         }
 
         void PopulateFormats(List<string> formatsList)
