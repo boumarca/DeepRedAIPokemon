@@ -914,6 +914,14 @@ namespace SimpleJSON
             get { return m_Dict.Count; }
         }
 
+        public string[] Keys
+        {
+            get
+            {
+                return m_Dict.Keys.ToArray();
+            }
+        }
+
         public override void Add(string aKey, JSONNode aItem)
         {
             if (aItem == null)

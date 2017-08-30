@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
 using com.MAB.Web;
+using SimpleJSON;
 
 namespace DeepRedAI.Showdown
 {
@@ -20,6 +21,12 @@ namespace DeepRedAI.Showdown
         Text _userLabel;
         [SerializeField]
         InputField _challengerInputField;
+        [SerializeField]
+        GameObject challengeReceivedWindow;
+        [SerializeField]
+        Text challengedUserText;
+        [SerializeField]
+        Text challengedFormatText;
 
         public override void EnterState(ShowdownClient context)
         {
@@ -30,6 +37,12 @@ namespace DeepRedAI.Showdown
 
         public override void ReceiveMessage(ServerMessage message)
         {
+            ServerMessageData[] payload = message.Payload;
+            for (int i = 0; i < payload.Length; i++)
+            {
+                if (payload[i].Type == MessageDataType.UpdateChallenges)
+                    UpdateChallenges(payload[i].Data);
+            }
         }
 
         public void PlayLadder()
@@ -53,6 +66,36 @@ namespace DeepRedAI.Showdown
                 string formatId = CurrentFormatId();
                 string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Challenge, _challengerInputField.text, formatId);
                 WebsocketConnection.Instance.Send(command);
+            }
+        }
+
+        public void AcceptChallenge()
+        {
+            string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Accept, challengedUserText.text);
+            WebsocketConnection.Instance.Send(command);
+            challengeReceivedWindow.SetActive(false);
+        }
+
+        public void DeclineChallenge()
+        {
+            string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Reject, challengedUserText.text);
+            WebsocketConnection.Instance.Send(command);
+            challengeReceivedWindow.SetActive(false);
+        }
+
+        void UpdateChallenges(string[] data)
+        {
+            JSONNode json = JSON.Parse(data[0]);
+            JSONObject challenges = json["challengesFrom"].AsObject;
+            if (challenges != null)
+            {
+                string[] keys = challenges.Keys;
+                if (keys.Length > 0)
+                {
+                    challengeReceivedWindow.SetActive(true);
+                    challengedUserText.text = keys[0];
+                    challengedFormatText.text = challenges[keys[0]];
+                }
             }
         }
 

@@ -12,5 +12,8 @@
         public const string NameTaken = "nametaken";
         public const string Search = "search";
         public const string Challenge = "challenge";
+        public const string UpdateChallenges = "updatechallenges";
+        public const string Reject = "reject";
+        public const string Accept = "accept";
     }   
 }
