@@ -27,6 +27,10 @@ namespace DeepRedAI.Showdown
         Text challengedUserText;
         [SerializeField]
         Text challengedFormatText;
+        [SerializeField]
+        GameObject challengeButton;
+        [SerializeField]
+        GameObject cancelButton;
 
         public override void EnterState(ShowdownClient context)
         {
@@ -66,7 +70,17 @@ namespace DeepRedAI.Showdown
                 string formatId = CurrentFormatId();
                 string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Challenge, _challengerInputField.text, formatId);
                 WebsocketConnection.Instance.Send(command);
+                challengeButton.SetActive(false);
+                cancelButton.SetActive(true);
             }
+        }
+
+        public void CancelChallenge()
+        {
+            string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.CancelChallenge, _challengerInputField.text);
+            WebsocketConnection.Instance.Send(command);
+            challengeButton.SetActive(true);
+            cancelButton.SetActive(false);
         }
 
         public void AcceptChallenge()

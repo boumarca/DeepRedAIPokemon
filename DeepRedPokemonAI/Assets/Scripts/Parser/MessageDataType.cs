@@ -15,5 +15,6 @@
         public const string UpdateChallenges = "updatechallenges";
         public const string Reject = "reject";
         public const string Accept = "accept";
+        public const string CancelChallenge = "cancelchallenge";
     }   
 }
