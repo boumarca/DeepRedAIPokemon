@@ -31,6 +31,8 @@ namespace DeepRedAI.Showdown
         GameObject challengeButton;
         [SerializeField]
         GameObject cancelButton;
+        [SerializeField]
+        InputField teamInput;
 
         public override void EnterState(ShowdownClient context)
         {
@@ -95,6 +97,16 @@ namespace DeepRedAI.Showdown
             string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Reject, challengedUserText.text);
             WebsocketConnection.Instance.Send(command);
             challengeReceivedWindow.SetActive(false);
+        }
+
+        public void UploadTeam()
+        {
+            if (!string.IsNullOrEmpty(teamInput.text))
+            {
+                string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.UploadTeam, teamInput.text);
+                WebsocketConnection.Instance.Send(command);
+
+            }
         }
 
         void UpdateChallenges(string[] data)

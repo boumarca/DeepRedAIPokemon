@@ -16,5 +16,6 @@
         public const string Reject = "reject";
         public const string Accept = "accept";
         public const string CancelChallenge = "cancelchallenge";
+        public const string UploadTeam = "utm";
     }   
 }
