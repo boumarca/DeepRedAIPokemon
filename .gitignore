@@ -5,3 +5,5 @@ DeepRedPokemonAI/Temp/
 *.csproj
 *.userprefs
 *.ide
+DeepRedPokemonAI/.vs/
+DeepRedPokemonAI/obj/
