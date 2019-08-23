@@ -14,15 +14,15 @@ namespace DeepRedAI.Showdown
 
         [Header("UI Elements")]
         [SerializeField]
-        InputField _usernameField;
+        InputField _usernameField = default;
         [SerializeField]
-        InputField _passwordField;
+        InputField _passwordField = default;
         [SerializeField]
-        Text _errorText;
+        Text _errorText = default;
 
         [Header("Data")]
         [SerializeField]
-        string _serverUrl;
+        string _serverUrl = default;
 
         string _challstr;
         

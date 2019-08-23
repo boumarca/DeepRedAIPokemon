@@ -12,9 +12,9 @@ namespace DeepRedAI.Showdown
 
         [Header("States")]
         [SerializeField]
-        ClientState _loginState;
+        ClientState _loginState = default;
         [SerializeField]
-        ClientState _lobbyState;
+        ClientState _lobbyState = default;
 
         ClientState _state;
 

@@ -16,23 +16,23 @@ namespace DeepRedAI.Showdown
         const string Space = " ";
 
         [SerializeField]
-        Dropdown _formats;
+        Dropdown _formats = default;
         [SerializeField]
-        Text _userLabel;
+        Text _userLabel = default;
         [SerializeField]
-        InputField _challengerInputField;
+        InputField _challengerInputField = default;
         [SerializeField]
-        GameObject challengeReceivedWindow;
+        GameObject challengeReceivedWindow = default;
         [SerializeField]
-        Text challengedUserText;
+        Text challengedUserText = default;
         [SerializeField]
-        Text challengedFormatText;
+        Text challengedFormatText = default;
         [SerializeField]
-        GameObject challengeButton;
+        GameObject challengeButton = default;
         [SerializeField]
-        GameObject cancelButton;
+        GameObject cancelButton = default;
         [SerializeField]
-        InputField teamInput;
+        InputField teamInput = default;
 
         public override void EnterState(ShowdownClient context)
         {

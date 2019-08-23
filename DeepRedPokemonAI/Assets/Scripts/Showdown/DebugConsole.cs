@@ -5,7 +5,7 @@ using com.MAB.Web;
 public class DebugConsole : MonoBehaviour
 {
     [SerializeField]
-    InputField _console;
+    InputField _console = default;
 
     public void Submit()
     {
