@@ -3,6 +3,7 @@ using DeepRedAI.Parser;
 using SimpleJSON;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace DeepRedAI.Showdown
@@ -22,15 +23,15 @@ namespace DeepRedAI.Showdown
 
         [Header("Data")]
         [SerializeField]
-        string _serverUrl = default;
+        ServerArgs _serverArgs = default;
 
         string _challstr;
         
         void Start()
         {
-            if (!string.IsNullOrEmpty(_serverUrl))
+            if (!string.IsNullOrEmpty(_serverArgs.ServerUrl))
             {
-                WebsocketConnection.Instance.OpenSocket(_serverUrl);
+                WebsocketConnection.Instance.OpenSocket(_serverArgs.ServerUrl);
             }
         }
 
@@ -73,7 +74,7 @@ namespace DeepRedAI.Showdown
             form.AddField("pass", _passwordField.text);
             form.AddField("challstr", _challstr);
 
-            WWW www = new WWW(LoginURL, form);
+			WWW www = new WWW(LoginURL, form);
             yield return www;
             if (!string.IsNullOrEmpty(www.error))
             {

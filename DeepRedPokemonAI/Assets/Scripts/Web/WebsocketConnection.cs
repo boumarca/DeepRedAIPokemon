@@ -72,7 +72,7 @@ namespace com.MAB.Web
             _socket.OnMessage -= DebugOnMessage;
             _socket.OnMessage -= MessageReceived;
             _socket.Close();
-            _socket = null;
+            _socket = null;			
         }
 
         public void Send(string message)
@@ -116,7 +116,8 @@ namespace com.MAB.Web
         void OnDestroy()
         {
             CloseSocket();
-        }
+			Instance = null;
+		}
 
         void MessageReceived(object sender, MessageEventArgs e)
         {
@@ -133,7 +134,7 @@ namespace com.MAB.Web
         void DebugOnClose(object sender, CloseEventArgs e)
         {
             if (LogLevel <= LogLevel.Debug)
-                Debug.Log("OnClose " + e.Reason);
+                Debug.Log("OnClose " + e.Reason + " code " + e.Code);
         }
 
         void DebugOnError(object sender, ErrorEventArgs e)
