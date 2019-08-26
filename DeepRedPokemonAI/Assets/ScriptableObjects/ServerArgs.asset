@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eeb95c9c90851b4da88fb2f4e02d57a, type: 3}
   m_Name: ServerArgs
   m_EditorClassIdentifier: 
-  _localhostUrl: ws://localhost.psim.us/
+  _localhostUrl: ws://localhost:8000/showdown/websocket
   _showdownServerUrl: ws://sim.smogon.com:8000/showdown/websocket
   _connectToLocalhost: 1
