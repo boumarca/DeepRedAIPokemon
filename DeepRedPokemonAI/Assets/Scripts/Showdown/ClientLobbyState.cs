@@ -21,17 +21,17 @@ namespace DeepRedAI.Showdown
         [SerializeField]
         InputField _challengerInputField = default;
         [SerializeField]
-        GameObject challengeReceivedWindow = default;
+        GameObject _challengeReceivedWindow = default;
         [SerializeField]
-        Text challengedUserText = default;
+        Text _challengedUserText = default;
         [SerializeField]
-        Text challengedFormatText = default;
+        Text _challengedFormatText = default;
         [SerializeField]
-        GameObject challengeButton = default;
+        GameObject _challengeButton = default;
         [SerializeField]
-        GameObject cancelButton = default;
+        GameObject _cancelButton = default;
         [SerializeField]
-        InputField teamInput = default;
+        InputField _teamInput = default;
 
         public override void EnterState(ShowdownClient context)
         {
@@ -74,8 +74,8 @@ namespace DeepRedAI.Showdown
                 string formatId = CurrentFormatId();
                 string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Challenge, _challengerInputField.text, formatId);
                 WebsocketConnection.Instance.Send(command);
-                challengeButton.SetActive(false);
-                cancelButton.SetActive(true);
+                _challengeButton.SetActive(false);
+                _cancelButton.SetActive(true);
             }
         }
 
@@ -83,29 +83,29 @@ namespace DeepRedAI.Showdown
         {
             string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.CancelChallenge, _challengerInputField.text);
             WebsocketConnection.Instance.Send(command);
-            challengeButton.SetActive(true);
-            cancelButton.SetActive(false);
+            _challengeButton.SetActive(true);
+            _cancelButton.SetActive(false);
         }
 
         public void AcceptChallenge()
         {
-            string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Accept, challengedUserText.text);
+            string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Accept, _challengedUserText.text);
             WebsocketConnection.Instance.Send(command);
-            challengeReceivedWindow.SetActive(false);
+            _challengeReceivedWindow.SetActive(false);
         }
 
         public void DeclineChallenge()
         {
-            string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Reject, challengedUserText.text);
+            string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Reject, _challengedUserText.text);
             WebsocketConnection.Instance.Send(command);
-            challengeReceivedWindow.SetActive(false);
+            _challengeReceivedWindow.SetActive(false);
         }
 
         public void UploadTeam()
         {
-            if (!string.IsNullOrEmpty(teamInput.text))
+            if (!string.IsNullOrEmpty(_teamInput.text))
             {
-                string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.UploadTeam, teamInput.text);
+                string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.UploadTeam, _teamInput.text);
                 WebsocketConnection.Instance.Send(command);
             }
         }
@@ -119,9 +119,9 @@ namespace DeepRedAI.Showdown
                 string[] keys = challenges.Keys;
                 if (keys.Length > 0)
                 {
-                    challengeReceivedWindow.SetActive(true);
-                    challengedUserText.text = keys[0];
-                    challengedFormatText.text = challenges[keys[0]];
+                    _challengeReceivedWindow.SetActive(true);
+                    _challengedUserText.text = keys[0];
+                    _challengedFormatText.text = challenges[keys[0]];
                 }
             }
         }

@@ -40,14 +40,15 @@ namespace DeepRedAI.Showdown
             ServerMessageData[] payload = message.Payload;
             for (int i = 0; i < payload.Length; i++)
             {
-                if (payload[i].Type == MessageDataType.ChallStr)
-                    _challstr = string.Join("|", payload[i].Data);
-                else if (payload[i].Type == MessageDataType.UpdateUser)
+				ServerMessageData serverMessageData = payload[i];
+                if (serverMessageData.Type == MessageDataType.ChallStr)
+                    _challstr = string.Join("|", serverMessageData.Data);
+                else if (serverMessageData.Type == MessageDataType.UpdateUser)
                     UpdateUser(payload[i].Data);
-                else if (payload[i].Type == MessageDataType.Formats)
-                    _context.PopulateFormatList(payload[i].Data);
-                else if (payload[i].Type == MessageDataType.NameTaken)
-                    LogErrorOnScreen(payload[i].Data);
+                else if (serverMessageData.Type == MessageDataType.Formats)
+                    _context.PopulateFormatList(serverMessageData.Data);
+                else if (serverMessageData.Type == MessageDataType.NameTaken)
+                    LogErrorOnScreen(serverMessageData.Data);
             }
         }
 

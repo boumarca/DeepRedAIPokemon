@@ -4304,7 +4304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _loginState: {fileID: 170354833}
   _lobbyState: {fileID: 1660118588}
-  _battleState: {fileID: 0}
+  _battleState: {fileID: 1500140045}
 --- !u!224 &766992079
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9857,12 +9857,12 @@ MonoBehaviour:
   _formats: {fileID: 2094053609}
   _userLabel: {fileID: 760099070}
   _challengerInputField: {fileID: 1184796884}
-  challengeReceivedWindow: {fileID: 615405221}
-  challengedUserText: {fileID: 1000347766}
-  challengedFormatText: {fileID: 2097743679}
-  challengeButton: {fileID: 1547228036}
-  cancelButton: {fileID: 1797983825}
-  teamInput: {fileID: 711819541}
+  _challengeReceivedWindow: {fileID: 615405221}
+  _challengedUserText: {fileID: 1000347766}
+  _challengedFormatText: {fileID: 2097743679}
+  _challengeButton: {fileID: 1547228036}
+  _cancelButton: {fileID: 1797983825}
+  _teamInput: {fileID: 711819541}
 --- !u!1 &1662462798
 GameObject:
   m_ObjectHideFlags: 0
