@@ -22,8 +22,9 @@ namespace DeepRedAI.Showdown
 
         public List<string> FormatList { get; private set; }
         public string Username { get; set; }
+		public string RoomId { get; set; }
 
-        void Start()
+		void Start()
         {
             _loginState.gameObject.SetActive(false);
             _lobbyState.gameObject.SetActive(false);
@@ -34,8 +35,11 @@ namespace DeepRedAI.Showdown
         public void MessageReceived(object sender, MessageReceivedEventArgs e)
         {
             ServerMessage m = MessageReader.Parse(e.Message);
-            if(m != null)
+			if (m != null)
+			{
+				RoomId = m.RoomId;
                 _state.ReceiveMessage(m);
+			}
         }
 
         void ChangeState(ClientState newState)

@@ -56,13 +56,13 @@ namespace DeepRedAI.Showdown
         public void PlayLadder()
         {
             string formatId = CurrentFormatId();
-            string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Search, formatId);
+            string command = MessageWriter.WriteMessage(_context.RoomId, MessageDataType.Search, formatId);
             WebsocketConnection.Instance.Send(command);
         }
 
         public void Logout()
         {
-            string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Logout);
+            string command = MessageWriter.WriteMessage(_context.RoomId, MessageDataType.Logout);
             WebsocketConnection.Instance.Send(command);
             _context.GoToLogin();
         }
@@ -72,7 +72,7 @@ namespace DeepRedAI.Showdown
             if (!string.IsNullOrEmpty(_challengerInputField.text))
             {
                 string formatId = CurrentFormatId();
-                string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Challenge, _challengerInputField.text, formatId);
+                string command = MessageWriter.WriteMessage(_context.RoomId, MessageDataType.Challenge, _challengerInputField.text, formatId);
                 WebsocketConnection.Instance.Send(command);
                 _challengeButton.SetActive(false);
                 _cancelButton.SetActive(true);
@@ -81,7 +81,7 @@ namespace DeepRedAI.Showdown
 
         public void CancelChallenge()
         {
-            string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.CancelChallenge, _challengerInputField.text);
+            string command = MessageWriter.WriteMessage(_context.RoomId, MessageDataType.CancelChallenge, _challengerInputField.text);
             WebsocketConnection.Instance.Send(command);
             _challengeButton.SetActive(true);
             _cancelButton.SetActive(false);
@@ -89,14 +89,14 @@ namespace DeepRedAI.Showdown
 
         public void AcceptChallenge()
         {
-            string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Accept, _challengedUserText.text);
+            string command = MessageWriter.WriteMessage(_context.RoomId, MessageDataType.Accept, _challengedUserText.text);
             WebsocketConnection.Instance.Send(command);
             _challengeReceivedWindow.SetActive(false);
         }
 
         public void DeclineChallenge()
         {
-            string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.Reject, _challengedUserText.text);
+            string command = MessageWriter.WriteMessage(_context.RoomId, MessageDataType.Reject, _challengedUserText.text);
             WebsocketConnection.Instance.Send(command);
             _challengeReceivedWindow.SetActive(false);
         }
@@ -105,7 +105,7 @@ namespace DeepRedAI.Showdown
         {
             if (!string.IsNullOrEmpty(_teamInput.text))
             {
-                string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.UploadTeam, _teamInput.text);
+                string command = MessageWriter.WriteMessage(_context.RoomId, MessageDataType.UploadTeam, _teamInput.text);
                 WebsocketConnection.Instance.Send(command);
             }
         }
