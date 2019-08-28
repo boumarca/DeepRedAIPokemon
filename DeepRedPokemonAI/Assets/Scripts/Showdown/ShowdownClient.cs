@@ -15,6 +15,8 @@ namespace DeepRedAI.Showdown
         ClientState _loginState = default;
         [SerializeField]
         ClientState _lobbyState = default;
+		[SerializeField]
+		ClientState _battleState = default;
 
         ClientState _state;
 
@@ -57,7 +59,12 @@ namespace DeepRedAI.Showdown
             ChangeState(_loginState);
         }
 
-        public void PopulateFormatList(string[] data)
+		public void GoToBattle()
+		{
+			ChangeState(_battleState);
+		}
+
+		public void PopulateFormatList(string[] data)
         {
             FormatList = new List<string>(data.Length);
             for (int i = 0; i < data.Length; i++)

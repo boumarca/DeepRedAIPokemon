@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DeepRedAI.Parser;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,8 +45,11 @@ namespace DeepRedAI.Showdown
             ServerMessageData[] payload = message.Payload;
             for (int i = 0; i < payload.Length; i++)
             {
-                if (payload[i].Type == MessageDataType.UpdateChallenges)
-                    UpdateChallenges(payload[i].Data);
+				ServerMessageData serverMessageData = payload[i];
+				if (serverMessageData.Type == MessageDataType.UpdateChallenges)
+					UpdateChallenges(serverMessageData.Data);
+				else if (serverMessageData.Type == MessageDataType.Init && serverMessageData.Data[0] == "battle")
+					_context.GoToBattle();
             }
         }
 
@@ -105,7 +107,6 @@ namespace DeepRedAI.Showdown
             {
                 string command = MessageWriter.WriteMessage(string.Empty, MessageDataType.UploadTeam, teamInput.text);
                 WebsocketConnection.Instance.Send(command);
-
             }
         }
 
