@@ -79,7 +79,11 @@ namespace DeepRedAI.Showdown
                     FormatList.Add(splits[0]);
                 }
             }
-
         }
+
+		public bool IsUser(string username)
+		{
+			return username == Username;
+		}
     }
 }

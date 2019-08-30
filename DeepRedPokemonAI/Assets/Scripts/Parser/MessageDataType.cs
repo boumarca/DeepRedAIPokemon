@@ -18,5 +18,7 @@
         public const string CancelChallenge = "cancelchallenge";
         public const string UploadTeam = "utm";
 		public const string Init = "init";
+		public const string Leave = "leave";
+		public const string LeaveShort = "l";
     }   
 }
