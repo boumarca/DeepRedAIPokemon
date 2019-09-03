@@ -75,19 +75,26 @@ namespace DeepRedAI.Showdown
             form.AddField("pass", _passwordField.text);
             form.AddField("challstr", _challstr);
 
-			WWW www = new WWW(LoginURL, form);
-            yield return www;
-            if (!string.IsNullOrEmpty(www.error))
-            {
-                Debug.LogError(www.error);
-            }
-            else if (!string.IsNullOrEmpty(www.text) && www.text.Length >= 1)
-            {
-                string json = www.text.Remove(0, 1);
-                JSONNode node = JSON.Parse(json);
-                string command = MessageWriter.WriteMessage(_context.RoomId, MessageDataType.Trn, _usernameField.text, "0", node["assertion"]);
-                WebsocketConnection.Instance.Send(command);
-            }
+			using (UnityWebRequest www = UnityWebRequest.Post(LoginURL, form))
+			{
+				yield return www.SendWebRequest();
+
+				if (www.isNetworkError || www.isHttpError)
+				{
+					Debug.LogError(www.error);
+				}
+				else
+				{
+					string text = www.downloadHandler.text;
+					if (!string.IsNullOrEmpty(text) && text.Length >= 1)
+					{
+						string json = text.Remove(0, 1);
+						JSONNode node = JSON.Parse(json);
+						string command = MessageWriter.WriteMessage(_context.RoomId, MessageDataType.Trn, _usernameField.text, "0", node["assertion"]);
+						WebsocketConnection.Instance.Send(command);
+					}	
+				}
+			}
         }
         
         void UpdateUser(string[] data)
@@ -99,7 +106,7 @@ namespace DeepRedAI.Showdown
                 _context.GoToLobby();
             }
         }
-
+		
         void LogErrorOnScreen(string[] data)
         {
             _errorText.text = data[1];
