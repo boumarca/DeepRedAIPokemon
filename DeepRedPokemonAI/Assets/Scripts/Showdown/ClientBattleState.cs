@@ -17,15 +17,9 @@ namespace DeepRedAI.Showdown
 			for (int i = 0; i < payload.Length; i++)
 			{
 				ServerMessageData serverMessageData = payload[i];
-				if (serverMessageData.Type == MessageDataType.Leave || serverMessageData.Type == MessageDataType.LeaveShort)
+				if (serverMessageData.Type == MessageDataType.Deinit)
 				{
-					if (serverMessageData.Data.Length > 0)
-					{
-						//The first character being their rank (users with no rank are represented by a space), and the rest of the string being their username.
-						string username = serverMessageData.Data[0].Substring(1); 
-						if (_context.IsUser(username))
-							_context.GoToLobby();
-					}
+					_context.GoToLobby();					
 				}					
 			}
 		}
