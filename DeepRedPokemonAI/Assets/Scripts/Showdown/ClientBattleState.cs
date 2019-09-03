@@ -29,5 +29,12 @@ namespace DeepRedAI.Showdown
 			string command = MessageWriter.WriteMessage(_context.RoomId, MessageDataType.Leave);
 			WebsocketConnection.Instance.Send(command);
 		}
+
+		public void ForfeitBattle()
+		{
+			string command = MessageWriter.WriteMessage(_context.RoomId, MessageDataType.Forfeit);
+			WebsocketConnection.Instance.Send(command);
+			LeaveRoom();
+		}
 	}
 }

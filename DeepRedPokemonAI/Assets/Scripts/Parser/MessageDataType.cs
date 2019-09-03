@@ -21,5 +21,6 @@
 		public const string Leave = "leave";
 		public const string LeaveShort = "l";
 		public const string Deinit = "deinit";
+		public const string Forfeit = "forfeit";
     }   
 }
