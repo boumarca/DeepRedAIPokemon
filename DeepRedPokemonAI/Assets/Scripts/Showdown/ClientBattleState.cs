@@ -10,6 +10,8 @@ namespace DeepRedAI.Showdown
 		[SerializeField]
 		Text _roomIdText = default;
 
+		ChoiceRequest _choiceRequest;
+
 		public override void ReceiveMessage(ServerMessage message)
 		{
 			_roomIdText.text = _context.RoomId;
@@ -19,8 +21,12 @@ namespace DeepRedAI.Showdown
 				ServerMessageData serverMessageData = payload[i];
 				if (serverMessageData.Type == MessageDataType.Deinit)
 				{
-					_context.GoToLobby();					
-				}					
+					_context.GoToLobby();
+				}
+				else if (serverMessageData.Type == MessageDataType.Request && !string.IsNullOrEmpty(serverMessageData.Data[0]))
+				{
+					_choiceRequest = ChoiceRequest.Parse(serverMessageData.Data[0]);
+				}
 			}
 		}
 
