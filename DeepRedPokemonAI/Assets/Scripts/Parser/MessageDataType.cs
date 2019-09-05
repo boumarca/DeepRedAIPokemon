@@ -23,5 +23,6 @@
 		public const string Deinit = "deinit";
 		public const string Forfeit = "forfeit";
 		public const string Request = "request";
+		public const string Player = "player";
     }   
 }
