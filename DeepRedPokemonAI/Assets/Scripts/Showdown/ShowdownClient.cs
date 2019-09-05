@@ -28,6 +28,7 @@ namespace DeepRedAI.Showdown
         {
             _loginState.gameObject.SetActive(false);
             _lobbyState.gameObject.SetActive(false);
+			_battleState.gameObject.SetActive(false);
             WebsocketConnection.Instance.OnMessageReceived += MessageReceived;
             ChangeState(_loginState);
         }
